@@ -314,52 +314,631 @@
 
       <div class="token-card">
         <h3>UTILITY</h3>
-        <p>None detected.</p>
-      </div>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
-      <div class="token-card">
-        <h3>SUPPLY</h3>
-        <p>Emotionally infinite.</p>
-      </div>
+<title>SAFU — So Absolutely F#Ked Up</title>
 
-      <div class="token-card">
-        <h3>COMMUNITY</h3>
-        <p>Traumatized but active.</p>
-      </div>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
 
-      <div class="token-card">
-        <h3>ROADMAP</h3>
-        <p>Mostly panic.</p>
-      </div>
+<style>
 
-    </div>
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+}
 
-  </div>
+html{
+  scroll-behavior:smooth;
+}
+
+body{
+  background:#050505;
+  color:white;
+  overflow-x:hidden;
+  font-family:'Inter',sans-serif;
+}
+
+/* BACKGROUND */
+
+body::before{
+  content:"";
+  position:fixed;
+  inset:0;
+  background:
+  radial-gradient(circle at top,#ff008840 0%,transparent 35%),
+  radial-gradient(circle at bottom,#ff4d0040 0%,transparent 35%);
+  z-index:-3;
+}
+
+.noise{
+  position:fixed;
+  inset:0;
+  background-image:url("https://grainy-gradients.vercel.app/noise.svg");
+  opacity:0.05;
+  pointer-events:none;
+  z-index:-2;
+}
+
+.glitch-line{
+  position:fixed;
+  width:100%;
+  height:2px;
+  background:#ff0088;
+  opacity:0.1;
+  animation:glitchMove 8s linear infinite;
+  z-index:-1;
+}
+
+@keyframes glitchMove{
+  0%{top:-10%;}
+  100%{top:120%;}
+}
+
+/* NAV */
+
+header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:24px 8%;
+  position:fixed;
+  width:100%;
+  top:0;
+  background:#050505d9;
+  backdrop-filter:blur(10px);
+  z-index:999;
+  border-bottom:1px solid #ffffff10;
+}
+
+.logo{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:46px;
+  color:#ff0088;
+  letter-spacing:3px;
+  cursor:pointer;
+  transition:0.2s;
+}
+
+.logo:hover{
+  transform:scale(1.06) rotate(-2deg);
+}
+
+nav a{
+  text-decoration:none;
+  color:white;
+  margin-left:24px;
+  font-weight:700;
+  transition:0.2s;
+}
+
+nav a:hover{
+  color:#ff0088;
+}
+
+/* HERO */
+
+.hero{
+  min-height:100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  padding:120px 10%;
+  position:relative;
+}
+
+.hero-content{
+  max-width:1100px;
+}
+
+.hero h1{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:clamp(100px,20vw,260px);
+  line-height:0.85;
+  text-shadow:
+  0 0 15px #ff0088,
+  0 0 40px #ff008860;
+  animation:flicker 4s infinite;
+}
+
+@keyframes flicker{
+  0%,18%,22%,25%,53%,57%,100%{
+    opacity:1;
+  }
+  20%,24%,55%{
+    opacity:0.4;
+  }
+}
+
+.hero h2{
+  color:#ff0088;
+  margin-top:10px;
+  font-size:clamp(24px,5vw,48px);
+  font-weight:800;
+}
+
+.status{
+  margin-top:28px;
+  font-size:20px;
+  color:#bbbbbb;
+  min-height:40px;
+}
+
+.hero p{
+  max-width:800px;
+  margin:32px auto;
+  font-size:20px;
+  line-height:1.8;
+  color:#d4d4d4;
+}
+
+.button-group{
+  display:flex;
+  justify-content:center;
+  flex-wrap:wrap;
+  gap:18px;
+  margin-top:42px;
+}
+
+.btn{
+  padding:18px 32px;
+  border-radius:18px;
+  font-weight:800;
+  text-decoration:none;
+  transition:0.25s;
+  cursor:pointer;
+  border:none;
+  font-size:15px;
+}
+
+.btn-primary{
+  background:#ff0088;
+  color:white;
+  box-shadow:0 0 30px #ff008870;
+}
+
+.btn-primary:hover{
+  transform:translateY(-4px) scale(1.03);
+}
+
+.btn-secondary{
+  background:#111;
+  border:1px solid #ffffff14;
+  color:white;
+}
+
+.btn-secondary:hover{
+  border-color:#ff0088;
+  color:#ff0088;
+}
+
+/* SECTIONS */
+
+section{
+  padding:120px 10%;
+}
+
+.section-title{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:72px;
+  margin-bottom:30px;
+  color:#ff0088;
+}
+
+.card{
+  background:#111111;
+  border:1px solid #ffffff10;
+  border-radius:30px;
+  padding:40px;
+  box-shadow:0 0 40px #00000060;
+}
+
+/* DAMAGE CHART */
+
+.chart-box{
+  margin-top:40px;
+  height:320px;
+  position:relative;
+  overflow:hidden;
+  border-radius:24px;
+  background:#090909;
+  border:1px solid #ffffff12;
+}
+
+.chart-line{
+  position:absolute;
+  width:140%;
+  height:4px;
+  background:#ff0088;
+  top:20%;
+  left:-10%;
+  transform:rotate(-12deg);
+  box-shadow:0 0 18px #ff0088;
+  animation:crash 5s infinite ease-in-out;
+}
+
+@keyframes crash{
+  0%{
+    top:20%;
+  }
+  30%{
+    top:18%;
+  }
+  50%{
+    top:50%;
+  }
+  70%{
+    top:82%;
+  }
+  100%{
+    top:95%;
+  }
+}
+
+.chart-warning{
+  position:absolute;
+  bottom:20px;
+  left:20px;
+  color:#ff4d4d;
+  font-weight:800;
+  font-size:20px;
+}
+
+/* TOKENOMICS */
+
+.token-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  gap:24px;
+  margin-top:30px;
+}
+
+.token-card{
+  background:#181818;
+  padding:28px;
+  border-radius:24px;
+  border:1px solid #ffffff10;
+  transition:0.25s;
+}
+
+.token-card:hover{
+  transform:translateY(-5px);
+  border-color:#ff008860;
+}
+
+.token-card h3{
+  color:#ff0088;
+  margin-bottom:10px;
+}
+
+/* PANIC BUTTON */
+
+.panic{
+  margin-top:40px;
+  text-align:center;
+}
+
+.panic button{
+  width:180px;
+  height:180px;
+  border-radius:50%;
+  border:none;
+  background:red;
+  color:white;
+  font-size:28px;
+  font-weight:900;
+  cursor:pointer;
+  box-shadow:0 0 40px red;
+  transition:0.2s;
+}
+
+.panic button:hover{
+  transform:scale(1.06);
+}
+
+/* FOOTER */
+
+footer{
+  padding:70px 10%;
+  text-align:center;
+  color:#7d7d7d;
+  border-top:1px solid #ffffff10;
+}
+
+/* MOBILE */
+
+@media(max-width:768px){
+
+  header{
+    flex-direction:column;
+    gap:20px;
+  }
+
+  nav a{
+    margin:0 10px;
+  }
+
+  .section-title{
+    font-size:52px;
+  }
+
+  .hero p{
+    font-size:18px;
+  }
+
+  .panic button{
+    width:140px;
+    height:140px;
+    font-size:22px;
+  }
+
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="noise"></div>
+<div class="glitch-line"></div>
+
+<header>
+
+<div class="logo" id="logo">SAFU</div>
+
+<nav>
+<a href="#about">About</a>
+<a href="#damage">Damage</a>
+<a href="#tokenomics">Tokenomics</a>
+</nav>
+
+</header>
+
+<section class="hero">
+
+<div class="hero-content">
+
+<h1>SAFU</h1>
+
+<h2>SO ABSOLUTELY F#KED UP</h2>
+
+<div class="status" id="status">
+Liquidity status uncertain...
+</div>
+
+<p>
+A meme token forged from destroyed portfolios,
+emotional trauma, and terminal degen behavior.
+No utility. No roadmap confidence.
+Only survival instincts.
+</p>
+
+<div class="button-group">
+
+<button class="btn btn-primary" onclick="panicMode()">
+ENTER PANIC MODE
+</button>
+
+<button class="btn btn-secondary" onclick="inspectDamage()">
+INSPECT DAMAGE
+</button>
+
+<button class="btn btn-secondary" onclick="fakeWallet()">
+CONNECT WALLET
+</button>
+
+</div>
+
+</div>
 
 </section>
 
-<section id="roadmap">
+<section id="about">
 
-  <h2 class="section-title">ROADMAP</h2>
+<h2 class="section-title">ABOUT</h2>
 
-  <div class="roadmap-box">
+<div class="card">
 
-    <div class="roadmap-step">
-      <h3>PHASE 1</h3>
-      <p>Launch token and pretend this is a good idea.</p>
-    </div>
+<p style="font-size:20px;line-height:1.9;color:#d4d4d4;">
 
-    <div class="roadmap-step">
-      <h3>PHASE 2</h3>
-      <p>Acquire holders with dangerous levels of optimism.</p>
-    </div>
+SAFU was created after staring at rugged charts for
+17 hours straight while whispering
+“it will recover.”
 
-    <div class="roadmap-step">
-      <h3>PHASE 3</h3>
-      <p>Post memes during market collapse.</p>
-    </div>
+<br><br>
 
-    <div class="roadmap-step">
+This ecosystem is powered entirely by:
+copium, bad decisions, and emotionally damaged holders.
+
+<br><br>
+
+Welcome home.
+
+</p>
+
+</div>
+
+</section>
+
+<section id="damage">
+
+<h2 class="section-title">MARKET DAMAGE</h2>
+
+<div class="card">
+
+<p style="margin-bottom:30px;font-size:20px;color:#cfcfcf;">
+Live chart technology unavailable due to catastrophic conditions.
+</p>
+
+<div class="chart-box">
+
+<div class="chart-line"></div>
+
+<div class="chart-warning">
+⚠ LIQUIDITY CRITICAL
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+<section id="tokenomics">
+
+<h2 class="section-title">TOKENOMICS</h2>
+
+<div class="token-grid">
+
+<div class="token-card">
+<h3>UTILITY</h3>
+<p>None detected.</p>
+</div>
+
+<div class="token-card">
+<h3>SUPPLY</h3>
+<p>Emotionally infinite.</p>
+</div>
+
+<div class="token-card">
+<h3>COMMUNITY</h3>
+<p>Traumatized but active.</p>
+</div>
+
+<div class="token-card">
+<h3>ROADMAP</h3>
+<p>Mostly panic.</p>
+</div>
+
+</div>
+
+<div class="panic">
+
+<h2 style="margin-bottom:30px;">
+Emergency Liquidation Button
+</h2>
+
+<button onclick="panicMode()">
+PANIC
+</button>
+
+</div>
+
+</section>
+
+<footer>
+
+NOT FINANCIAL ADVICE • NOT EMOTIONAL SUPPORT • © SAFU
+
+</footer>
+
+<script>
+
+/* STATUS ROTATOR */
+
+const statusMessages = [
+"Liquidity status uncertain...",
+"Emotional damage detected...",
+"Market conditions catastrophic...",
+"Chart unavailable due to trauma...",
+"Community coping aggressively...",
+"Someone bought the top again..."
+];
+
+let statusIndex = 0;
+
+setInterval(() => {
+
+statusIndex = (statusIndex + 1) % statusMessages.length;
+
+document.getElementById("status").innerText =
+statusMessages[statusIndex];
+
+}, 2500);
+
+/* PANIC MODE */
+
+function panicMode(){
+
+document.body.style.animation = "shake 0.4s";
+
+setTimeout(() => {
+document.body.style.animation = "";
+}, 500);
+
+alert("⚠ PANIC MODE ACTIVATED ⚠\n\nSELLING WOULD REQUIRE LIQUIDITY");
+
+}
+
+/* DAMAGE BUTTON */
+
+function inspectDamage(){
+
+alert(
+"PORTFOLIO ANALYSIS COMPLETE\n\nSTATUS: SO ABSOLUTELY F#KED UP"
+);
+
+}
+
+/* FAKE WALLET */
+
+function fakeWallet(){
+
+alert(
+"CONNECT WALLET TO LOSE EVERYTHING FASTER\n\nEven scammers rejected this token."
+);
+
+}
+
+/* SECRET LOGO CLICK */
+
+let clicks = 0;
+
+document.getElementById("logo").addEventListener("click", () => {
+
+clicks++;
+
+if(clicks >= 10){
+
+document.body.style.filter = "hue-rotate(180deg)";
+
+alert(
+"🚨 DEV LEFT 🚨\n\njk... maybe"
+);
+
+clicks = 0;
+
+}
+
+});
+
+/* SHAKE EFFECT */
+
+const style = document.createElement('style');
+
+style.innerHTML = `
+@keyframes shake{
+0%{transform:translate(2px,2px);}
+25%{transform:translate(-2px,3px);}
+50%{transform:translate(3px,-2px);}
+75%{transform:translate(-3px,2px);}
+100%{transform:translate(2px,-2px);}
+}
+`;
+
+document.head.appendChild(style);
+
+</script>
+
+</body>
+</html>
+oadmap-step">
       <h3>PHASE 4</h3>
       <p>Maybe recover. Probably not.</p>
     </div>
