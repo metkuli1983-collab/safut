@@ -3,42 +3,14 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>$SAFU // SYSTEM UNSTABLE</title>
-
-<style>
-  body {
-    margin:0;
-    font-family: monospace;
-    background:#050507;
-    color:#dfffe9;
-    overflow:hidden;
-  }
-
-  canvas {
-    position:fixed;
-    top:0;
-    left:0;
-    z-index:-1;
-  }
-
-  header {
-    text-align:center;
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>SAFU // Terra Classic Protocol</title>
+<title>SAFU — Terra Classic</title>
 
 <style>
 :root{
   --bg:#05060a;
-  --panel:rgba(255,255,255,0.04);
-  --line:rgba(0,255,153,0.25);
-  --text:#d7ffe9;
+  --text:#eafff4;
   --accent:#00ff99;
-  --danger:#ff3b3b;
-  --warn:#ffcc00;
+  --muted:rgba(255,255,255,0.6);
 }
 
 *{
@@ -49,47 +21,68 @@
 }
 
 body{
-  background: radial-gradient(circle at top, #0d0f18, var(--bg));
+  background: radial-gradient(circle at top, #0e1018, var(--bg));
   color:var(--text);
   overflow-x:hidden;
 }
 
-/* subtle grid */
+/* subtle animated noise */
 body::before{
   content:"";
   position:fixed;
   inset:0;
-  background:
-    linear-gradient(var(--line) 1px, transparent 1px),
-    linear-gradient(90deg, var(--line) 1px, transparent 1px);
-  background-size:60px 60px;
+  background: repeating-linear-gradient(
+    0deg,
+    rgba(255,255,255,0.03),
+    rgba(255,255,255,0.03) 1px,
+    transparent 1px,
+    transparent 2px
+  );
   opacity:0.05;
   pointer-events:none;
 }
 
-/* HEADER */
-header{
+/* HERO */
+.hero{
+  height:100vh;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
   text-align:center;
-  padding:70px 20px 30px;
+  padding:20px;
 }
 
-h1{
-  font-size:64px;
+.title{
+  font-size:72px;
+  letter-spacing:6px;
   color:var(--accent);
-  letter-spacing:4px;
-  text-shadow:0 0 20px rgba(0,255,153,0.3);
+  text-shadow:0 0 25px rgba(0,255,153,0.25);
+  animation:flicker 2.5s infinite;
 }
 
-.sub{
-  opacity:0.7;
-  margin-top:10px;
+@keyframes flicker{
+  0%,100%{opacity:1}
+  50%{opacity:0.7}
+}
+
+.subtitle{
+  margin-top:15px;
   font-size:14px;
+  color:var(--muted);
 }
 
-/* BUTTON */
+.desc{
+  margin-top:10px;
+  max-width:500px;
+  color:var(--muted);
+  line-height:1.4;
+}
+
+/* CTA */
 button{
   margin-top:25px;
-  padding:12px 18px;
+  padding:12px 20px;
   border:1px solid var(--accent);
   background:transparent;
   color:var(--accent);
@@ -99,218 +92,146 @@ button{
 
 button:hover{
   background:var(--accent);
-  color:#000;
+  color:black;
 }
 
-/* GRID */
-.container{
-  max-width:1100px;
-  margin:40px auto;
-  padding:20px;
+/* SECTION */
+.section{
+  max-width:1000px;
+  margin:0 auto;
+  padding:80px 20px;
+}
+
+.grid{
   display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+  grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
   gap:15px;
 }
 
-/* CARD */
 .card{
-  background:var(--panel);
-  border:1px solid rgba(255,255,255,0.08);
+  border:1px solid rgba(255,255,255,0.1);
   padding:15px;
-  transition:0.2s;
+  background:rgba(255,255,255,0.03);
 }
 
-.card:hover{
-  border-color:var(--accent);
-  transform:translateY(-3px);
+.card h3{
+  margin-bottom:10px;
+  color:var(--accent);
 }
 
-/* SYSTEM PANEL */
-.metric{
+/* MEME LINE */
+.meme-line{
+  text-align:center;
+  font-size:18px;
+  margin:40px 0;
+  color:var(--muted);
+}
+
+/* LINKS */
+.links{
   display:flex;
-  justify-content:space-between;
-  margin:8px 0;
-  font-size:13px;
+  gap:10px;
+  justify-content:center;
+  flex-wrap:wrap;
+  margin-top:20px;
 }
 
-.bar{
-  height:6px;
-  background:rgba(255,255,255,0.1);
-  margin-top:6px;
-  position:relative;
+a{
+  color:var(--accent);
+  text-decoration:none;
+  border:1px solid rgba(0,255,153,0.3);
+  padding:8px 12px;
 }
 
-.fill{
-  height:100%;
-  width:50%;
-  background:var(--accent);
-  transition:0.5s;
+/* GLITCH EFFECT */
+.glitch{
+  animation:glitch 1.8s infinite;
 }
 
-/* LOG */
-#log{
-  position:fixed;
-  bottom:10px;
-  left:10px;
-  font-size:12px;
-  opacity:0.6;
-  max-width:300px;
+@keyframes glitch{
+  0%{transform:translate(0)}
+  20%{transform:translate(-1px,1px)}
+  40%{transform:translate(1px,-1px)}
+  60%{transform:translate(-1px,0px)}
+  80%{transform:translate(1px,1px)}
+  100%{transform:translate(0)}
 }
 
-/* MODE SHIFT */
-.active{
+/* STATE CHANGE */
+.chaos{
   filter:hue-rotate(120deg) contrast(1.1);
-}
-
-.danger{
-  color:var(--danger);
-}
-
-.warn{
-  color:var(--warn);
 }
 </style>
 </head>
 
 <body>
 
-<header>
-  <h1>SAFU</h1>
-  <div class="sub">
-    So Absolutely F#cked Up — Terra Classic anomaly protocol
+<div class="hero" id="hero">
+  <div class="title glitch">SAFU</div>
+
+  <div class="subtitle">
+    So Absolutely F#cked Up — Terra Classic anomaly asset
   </div>
 
-  <button onclick="activate()">
-    INITIALIZE SAFU PROTOCOL
-  </button>
-</header>
+  <div class="desc">
+    A controlled experiment in meme-driven market behavior.
+    No roadmap. No promises. Just signal and noise.
+  </div>
 
-<div class="container">
+  <button onclick="enter()">ENTER SAFU</button>
+</div>
 
-  <!-- SYSTEM CORE -->
-  <div class="card">
-    <h3>SYSTEM CORE</h3>
+<div class="section">
 
-    <div class="metric">
-      <span>Stability Index</span>
-      <span id="stabilityVal">72%</span>
+  <div class="meme-line">
+    “it shouldn’t exist… but it does”
+  </div>
+
+  <div class="grid">
+
+    <div class="card">
+      <h3>WHAT IS SAFU</h3>
+      <p>Experimental meme asset on Terra Classic built around chaos narratives and community behavior.</p>
     </div>
-    <div class="bar"><div class="fill" id="stabilityBar"></div></div>
 
-    <div class="metric">
-      <span>Market Emotion</span>
-      <span id="emotion">Neutral</span>
+    <div class="card">
+      <h3>WHY IT EXISTS</h3>
+      <p>Because markets are emotional systems pretending to be logical.</p>
     </div>
 
-    <div class="metric">
-      <span>Chaos Pressure</span>
-      <span id="chaosVal">41%</span>
+    <div class="card">
+      <h3>STATUS</h3>
+      <p>Unstable but active</p>
+      <p>Signal emerging</p>
     </div>
-    <div class="bar"><div class="fill" id="chaosBar"></div></div>
+
   </div>
 
-  <!-- TOKEN INFO -->
-  <div class="card">
-    <h3>TOKEN CORE</h3>
-    <p>Chain: Terra Classic</p>
-    <p>Token: SAFU</p>
-    <p>Type: Experimental Meme Asset</p>
-    <p>Status: <span class="warn">Unstable but active</span></p>
+  <div class="meme-line">
+    not financial advice. not financial safety either.
   </div>
 
-  <!-- SIGNAL PANEL -->
-  <div class="card">
-    <h3>SIGNAL FEED</h3>
-    <p id="signal">Awaiting system initialization...</p>
-  </div>
-
-  <!-- ACTION PANEL -->
-  <div class="card">
-    <h3>ACTIONS</h3>
-    <button onclick="pulse()">SCAN MARKET</button>
-    <button onclick="chaos()">FORCE CHAOS</button>
+  <div class="links">
+    <a href="#">Chart</a>
+    <a href="#">Explorer</a>
+    <a href="#">Swap</a>
   </div>
 
 </div>
 
-<div id="log">booting SAFU core...</div>
-
 <script>
+function enter(){
+  document.body.classList.toggle("chaos");
 
-let active = false;
+  const lines = [
+    "system alignment shifting",
+    "liquidity sentiment unstable",
+    "community signal rising",
+    "market perception distorted"
+  ];
 
-function rand(min,max){
-  return Math.floor(Math.random()*(max-min)+min);
+  alert(lines[Math.floor(Math.random()*lines.length)]);
 }
-
-function updateBars(){
-  let stab = rand(40,95);
-  let chaos = rand(10,90);
-
-  document.getElementById("stabilityVal").innerText = stab + "%";
-  document.getElementById("chaosVal").innerText = chaos + "%";
-
-  document.getElementById("stabilityBar").style.width = stab + "%";
-  document.getElementById("chaosBar").style.width = chaos + "%";
-
-  let emotion =
-    stab > 80 ? "Greed" :
-    stab > 50 ? "Neutral" :
-    "Fear";
-
-  document.getElementById("emotion").innerText = emotion;
-
-  return {stab, chaos, emotion};
-}
-
-function log(msg){
-  document.getElementById("log").innerText = msg;
-}
-
-function signal(msg){
-  document.getElementById("signal").innerText = msg;
-}
-
-function pulse(){
-  let s = updateBars();
-  signal("market scan complete → " + s.emotion + " detected");
-  log("scan executed @ " + new Date().toLocaleTimeString());
-}
-
-function chaos(){
-  document.body.classList.add("active");
-  signal("WARNING: chaos injection successful");
-  log("chaos forced into system");
-
-  setTimeout(()=>{
-    document.body.classList.remove("active");
-  },600);
-}
-
-function activate(){
-  active = true;
-  document.body.classList.add("active");
-
-  signal("SAFU PROTOCOL INITIALIZED");
-  log("system fully online");
-
-  setInterval(()=>{
-    if(active){
-      updateBars();
-
-      let events = [
-        "liquidity drift detected",
-        "community volatility rising",
-        "speculation wave forming",
-        "terra classic signal unstable",
-        "unknown market force active"
-      ];
-
-      signal(events[rand(0,events.length)]);
-    }
-  },2500);
-}
-
 </script>
 
 </body>
