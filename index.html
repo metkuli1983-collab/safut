@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SAFU — So Absolutely F#Ked Up</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+
+  <style>
+    *{
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
+    }
+
+    body{
+      background:#050505;
+      color:white;
+      font-family:'Inter',sans-serif;
+      overflow-x:hidden;
+    }
+
+    body::before{
+      content:"";
+      position:fixed;
+      inset:0;
+      background:
+        radial-gradient(circle at top,#ff008850 0%,transparent 40%),
+        radial-gradient(circle at bottom,#ff4d0040 0%,transparent 35%);
+      z-index:-2;
+    }
+
+    .noise{
+      position:fixed;
+      inset:0;
+      opacity:0.04;
+      background-image:url("https://grainy-gradients.vercel.app/noise.svg");
+      z-index:-1;
+      pointer-events:none;
+    }
+
+    header{
+      padding:24px 8%;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      border-bottom:1px solid #ffffff12;
+      backdrop-filter: blur(10px);
+    }
+
+    .logo{
+      font-family:'Bebas Neue',sans-serif;
+      font-size:42px;
+      color:#ff0088;
+      letter-spacing:2px;
+    }
+
+    nav a{
+      color:white;
+      text-decoration:none;
+      margin-left:24px;
+      font-weight:600;
+      transition:0.2s;
+    }
+
+    nav a:hover{
+      color:#ff0088;
+    }
+
+    .hero{
+      min-height:90vh;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      text-align:center;
+      padding:80px 10%;
+      position:relative;
+    }
+
+    .hero-content{
+      max-width:950px;
+    }
+
+    .hero h1{
+      font-family:'Bebas Neue',sans-serif;
+      font-size:clamp(80px,16vw,220px);
+      line-height:0.9;
+      color:white;
+      text-shadow:
+        0 0 20px #ff0088,
+        0 0 60px #ff008860;
+    }
+
+    .hero h2{
+      margin-top:10px;
+      font-size:clamp(20px,4vw,42px);
+      color:#ff0088;
+      font-weight:800;
+      text-transform:uppercase;
+    }
+
+    .hero p{
+      margin:32px auto;
+      max-width:700px;
+      font-size:20px;
+      line-height:1.7;
+      color:#d1d1d1;
+    }
+
+    .buttons{
+      display:flex;
+      gap:20px;
+      justify-content:center;
+      flex-wrap:wrap;
+      margin-top:40px;
+    }
+
+    .btn{
+      padding:18px 34px;
+      border-radius:18px;
+      text-decoration:none;
+      font-weight:800;
+      transition:0.25s;
+      font-size:16px;
+    }
+
+    .btn-primary{
+      background:#ff0088;
+      color:white;
+      box-shadow:0 0 30px #ff008860;
+    }
+
+    .btn-primary:hover{
+      transform:translateY(-4px) scale(1.03);
+    }
+
+    .btn-secondary{
+      border:2px solid #ffffff20;
+      color:white;
+      background:#ffffff08;
+    }
+
+    .btn-secondary:hover{
+      border-color:#ff0088;
+      color:#ff0088;
+    }
+
+    section{
+      padding:120px 10%;
+    }
+
+    .section-title{
+      font-family:'Bebas Neue',sans-serif;
+      font-size:72px;
+      margin-bottom:30px;
+      color:#ff0088;
+    }
+
+    .about-box,
+    .token-box,
+    .roadmap-box{
+      background:#111111;
+      border:1px solid #ffffff10;
+      border-radius:28px;
+      padding:40px;
+      box-shadow:0 0 40px #00000050;
+    }
+
+    .about-box p{
+      font-size:20px;
+      line-height:1.8;
+      color:#d8d8d8;
+    }
+
+    .token-grid{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+      gap:24px;
+      margin-top:30px;
+    }
+
+    .token-card{
+      background:#181818;
+      border-radius:22px;
+      padding:30px;
+      border:1px solid #ffffff10;
+      transition:0.2s;
+    }
+
+    .token-card:hover{
+      transform:translateY(-5px);
+      border-color:#ff008850;
+    }
+
+    .token-card h3{
+      color:#ff0088;
+      margin-bottom:10px;
+      font-size:24px;
+    }
+
+    .roadmap-step{
+      margin-bottom:28px;
+      padding-bottom:28px;
+      border-bottom:1px solid #ffffff12;
+    }
+
+    .roadmap-step:last-child{
+      border-bottom:none;
+    }
+
+    .roadmap-step h3{
+      color:#ff0088;
+      font-size:28px;
+      margin-bottom:10px;
+    }
+
+    footer{
+      padding:60px 10%;
+      text-align:center;
+      color:#8d8d8d;
+      border-top:1px solid #ffffff10;
+      font-size:15px;
+    }
+
+    @media(max-width:768px){
+
+      header{
+        flex-direction:column;
+        gap:20px;
+      }
+
+      nav a{
+        margin:0 10px;
+      }
+
+      .section-title{
+        font-size:54px;
+      }
+
+      .hero p{
+        font-size:18px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="noise"></div>
+
+<header>
+  <div class="logo">SAFU</div>
+
+  <nav>
+    <a href="#about">About</a>
+    <a href="#tokenomics">Tokenomics</a>
+    <a href="#roadmap">Roadmap</a>
+  </nav>
+</header>
+
+<section class="hero">
+
+  <div class="hero-content">
+
+    <h1>SAFU</h1>
+
+    <h2>So Absolutely F#Ked Up</h2>
+
+    <p>
+      A meme token forged from destroyed portfolios,
+      emotional damage, and pure degen energy.
+      No promises. No utility. Just vibes and survival instincts.
+    </p>
+
+    <div class="buttons">
+      <a href="#" class="btn btn-primary">BUY SAFU</a>
+      <a href="#" class="btn btn-secondary">VIEW CHART</a>
+      <a href="#" class="btn btn-secondary">JOIN TELEGRAM</a>
+    </div>
+
+  </div>
+
+</section>
+
+<section id="about">
+
+  <h2 class="section-title">ABOUT</h2>
+
+  <div class="about-box">
+
+    <p>
+      SAFU was born after staring at rugged charts for 17 hours straight
+      and pretending everything was still under control.
+      <br><br>
+      This project has zero utility, questionable decision making,
+      and enough emotional support for exactly nobody.
+      <br><br>
+      Welcome home.
+    </p>
+
+  </div>
+
+</section>
+
+<section id="tokenomics">
+
+  <h2 class="section-title">TOKENOMICS</h2>
+
+  <div class="token-box">
+
+    <div class="token-grid">
+
+      <div class="token-card">
+        <h3>UTILITY</h3>
+        <p>None detected.</p>
+      </div>
+
+      <div class="token-card">
+        <h3>SUPPLY</h3>
+        <p>Emotionally infinite.</p>
+      </div>
+
+      <div class="token-card">
+        <h3>COMMUNITY</h3>
+        <p>Traumatized but active.</p>
+      </div>
+
+      <div class="token-card">
+        <h3>ROADMAP</h3>
+        <p>Mostly panic.</p>
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+<section id="roadmap">
+
+  <h2 class="section-title">ROADMAP</h2>
+
+  <div class="roadmap-box">
+
+    <div class="roadmap-step">
+      <h3>PHASE 1</h3>
+      <p>Launch token and pretend this is a good idea.</p>
+    </div>
+
+    <div class="roadmap-step">
+      <h3>PHASE 2</h3>
+      <p>Acquire holders with dangerous levels of optimism.</p>
+    </div>
+
+    <div class="roadmap-step">
+      <h3>PHASE 3</h3>
+      <p>Post memes during market collapse.</p>
+    </div>
+
+    <div class="roadmap-step">
+      <h3>PHASE 4</h3>
+      <p>Maybe recover. Probably not.</p>
+    </div>
+
+  </div>
+
+</section>
+
+<footer>
+  NOT FINANCIAL ADVICE • NOT EMOTIONAL SUPPORT • © SAFU
+</footer>
+
+</body>
+</html>
