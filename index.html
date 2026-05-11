@@ -3,14 +3,14 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>SAFU — Terra Classic</title>
+<title>SAFU — Signal Core</title>
 
 <style>
 :root{
   --bg:#05060a;
   --text:#eafff4;
   --accent:#00ff99;
-  --muted:rgba(255,255,255,0.6);
+  --muted:rgba(255,255,255,0.65);
 }
 
 *{
@@ -21,9 +21,9 @@
 }
 
 body{
-  background: radial-gradient(circle at top, #0e1018, var(--bg));
+  background: radial-gradient(circle at center, #0e1018, var(--bg));
   color:var(--text);
-  overflow-x:hidden;
+  overflow:hidden;
 }
 
 /* subtle animated noise */
@@ -42,8 +42,8 @@ body::before{
   pointer-events:none;
 }
 
-/* HERO */
-.hero{
+/* CENTER CORE */
+.wrap{
   height:100vh;
   display:flex;
   flex-direction:column;
@@ -53,41 +53,66 @@ body::before{
   padding:20px;
 }
 
-.title{
-  font-size:72px;
-  letter-spacing:6px;
+/* SIGNAL CORE VISUAL */
+.core{
+  position:absolute;
+  width:320px;
+  height:320px;
+  border-radius:50%;
+  background: radial-gradient(circle, rgba(0,255,153,0.25), transparent 70%);
+  animation:pulse 3s infinite ease-in-out;
+  filter: blur(2px);
+  z-index:0;
+}
+
+@keyframes pulse{
+  0%{transform:scale(0.9); opacity:0.5;}
+  50%{transform:scale(1.2); opacity:1;}
+  100%{transform:scale(0.9); opacity:0.5;}
+}
+
+/* TITLE */
+h1{
+  font-size:84px;
+  letter-spacing:8px;
   color:var(--accent);
-  text-shadow:0 0 25px rgba(0,255,153,0.25);
-  animation:flicker 2.5s infinite;
+  z-index:1;
+  text-shadow:0 0 30px rgba(0,255,153,0.25);
+  animation:flicker 2.8s infinite;
 }
 
 @keyframes flicker{
-  0%,100%{opacity:1}
-  50%{opacity:0.7}
+  0%,100%{opacity:1;}
+  50%{opacity:0.7;}
 }
 
-.subtitle{
-  margin-top:15px;
+/* SUBTEXT */
+.sub{
+  margin-top:10px;
   font-size:14px;
   color:var(--muted);
+  z-index:1;
 }
 
 .desc{
   margin-top:10px;
-  max-width:500px;
+  max-width:480px;
+  font-size:13px;
   color:var(--muted);
-  line-height:1.4;
+  line-height:1.5;
+  z-index:1;
 }
 
 /* CTA */
 button{
   margin-top:25px;
-  padding:12px 20px;
+  padding:12px 18px;
   border:1px solid var(--accent);
   background:transparent;
   color:var(--accent);
   cursor:pointer;
   transition:0.2s;
+  z-index:1;
 }
 
 button:hover{
@@ -95,70 +120,24 @@ button:hover{
   color:black;
 }
 
-/* SECTION */
-.section{
-  max-width:1000px;
-  margin:0 auto;
-  padding:80px 20px;
-}
-
-.grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
-  gap:15px;
-}
-
-.card{
-  border:1px solid rgba(255,255,255,0.1);
-  padding:15px;
-  background:rgba(255,255,255,0.03);
-}
-
-.card h3{
-  margin-bottom:10px;
-  color:var(--accent);
-}
-
-/* MEME LINE */
-.meme-line{
-  text-align:center;
-  font-size:18px;
-  margin:40px 0;
+/* INFO BLOCK (bottom) */
+.info{
+  position:absolute;
+  bottom:30px;
+  width:100%;
+  display:flex;
+  justify-content:center;
+  gap:40px;
+  font-size:12px;
   color:var(--muted);
 }
 
-/* LINKS */
-.links{
-  display:flex;
-  gap:10px;
-  justify-content:center;
-  flex-wrap:wrap;
-  margin-top:20px;
-}
-
-a{
-  color:var(--accent);
-  text-decoration:none;
-  border:1px solid rgba(0,255,153,0.3);
-  padding:8px 12px;
-}
-
-/* GLITCH EFFECT */
-.glitch{
-  animation:glitch 1.8s infinite;
-}
-
-@keyframes glitch{
-  0%{transform:translate(0)}
-  20%{transform:translate(-1px,1px)}
-  40%{transform:translate(1px,-1px)}
-  60%{transform:translate(-1px,0px)}
-  80%{transform:translate(1px,1px)}
-  100%{transform:translate(0)}
+.info div{
+  text-align:center;
 }
 
 /* STATE CHANGE */
-.chaos{
+.active{
   filter:hue-rotate(120deg) contrast(1.1);
 }
 </style>
@@ -166,72 +145,66 @@ a{
 
 <body>
 
-<div class="hero" id="hero">
-  <div class="title glitch">SAFU</div>
+<div class="wrap" id="wrap">
 
-  <div class="subtitle">
-    So Absolutely F#cked Up — Terra Classic anomaly asset
-  </div>
+  <div class="core"></div>
+
+  <h1>SAFU</h1>
+
+  <div class="sub">So Absolutely F#cked Up</div>
 
   <div class="desc">
-    A controlled experiment in meme-driven market behavior.
-    No roadmap. No promises. Just signal and noise.
+    Terra Classic anomaly signal detected.  
+    A controlled experiment in chaotic market behavior.
   </div>
 
   <button onclick="enter()">ENTER SAFU</button>
+
 </div>
 
-<div class="section">
-
-  <div class="meme-line">
-    “it shouldn’t exist… but it does”
+<div class="info">
+  <div>
+    <div>CHAIN</div>
+    <div>Terra Classic</div>
   </div>
 
-  <div class="grid">
-
-    <div class="card">
-      <h3>WHAT IS SAFU</h3>
-      <p>Experimental meme asset on Terra Classic built around chaos narratives and community behavior.</p>
-    </div>
-
-    <div class="card">
-      <h3>WHY IT EXISTS</h3>
-      <p>Because markets are emotional systems pretending to be logical.</p>
-    </div>
-
-    <div class="card">
-      <h3>STATUS</h3>
-      <p>Unstable but active</p>
-      <p>Signal emerging</p>
-    </div>
-
+  <div>
+    <div>STATUS</div>
+    <div id="status">Unstable</div>
   </div>
 
-  <div class="meme-line">
-    not financial advice. not financial safety either.
+  <div>
+    <div>SIGNAL</div>
+    <div id="signal">Dormant</div>
   </div>
-
-  <div class="links">
-    <a href="#">Chart</a>
-    <a href="#">Explorer</a>
-    <a href="#">Swap</a>
-  </div>
-
 </div>
 
 <script>
-function enter(){
-  document.body.classList.toggle("chaos");
 
-  const lines = [
-    "system alignment shifting",
-    "liquidity sentiment unstable",
-    "community signal rising",
-    "market perception distorted"
+let active = false;
+
+function enter(){
+  active = true;
+  document.body.classList.toggle("active");
+
+  document.getElementById("status").innerText = "Active";
+  document.getElementById("signal").innerText = "Awakened";
+
+  const msgs = [
+    "liquidity signal shifting",
+    "community resonance detected",
+    "market instability rising",
+    "unknown force engaged",
+    "SAFU protocol stabilized... temporarily"
   ];
 
-  alert(lines[Math.floor(Math.random()*lines.length)]);
+  setInterval(()=>{
+    if(!active) return;
+    document.getElementById("signal").innerText =
+      msgs[Math.floor(Math.random()*msgs.length)];
+  }, 2000);
 }
+
 </script>
 
 </body>
