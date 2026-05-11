@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>SAFU — Signal Core</title>
+<title>SAFU — Controlled Collapse</title>
 
 <style>
 :root{
@@ -21,28 +21,31 @@
 }
 
 body{
-  background: radial-gradient(circle at center, #0e1018, var(--bg));
+  background: radial-gradient(circle at center, #0c0f18, var(--bg));
   color:var(--text);
   overflow:hidden;
+  transition:0.6s ease;
 }
 
-/* subtle animated noise */
+/* subtle instability field */
 body::before{
   content:"";
   position:fixed;
   inset:0;
-  background: repeating-linear-gradient(
-    0deg,
-    rgba(255,255,255,0.03),
-    rgba(255,255,255,0.03) 1px,
-    transparent 1px,
-    transparent 2px
-  );
-  opacity:0.05;
+  background:
+    radial-gradient(circle at 50% 50%, rgba(0,255,153,0.08), transparent 60%),
+    repeating-linear-gradient(
+      0deg,
+      rgba(255,255,255,0.03),
+      rgba(255,255,255,0.03) 1px,
+      transparent 1px,
+      transparent 3px
+    );
+  opacity:0.08;
   pointer-events:none;
 }
 
-/* CENTER CORE */
+/* CENTER */
 .wrap{
   height:100vh;
   display:flex;
@@ -53,57 +56,36 @@ body::before{
   padding:20px;
 }
 
-/* SIGNAL CORE VISUAL */
-.core{
-  position:absolute;
-  width:320px;
-  height:320px;
-  border-radius:50%;
-  background: radial-gradient(circle, rgba(0,255,153,0.25), transparent 70%);
-  animation:pulse 3s infinite ease-in-out;
-  filter: blur(2px);
-  z-index:0;
-}
-
-@keyframes pulse{
-  0%{transform:scale(0.9); opacity:0.5;}
-  50%{transform:scale(1.2); opacity:1;}
-  100%{transform:scale(0.9); opacity:0.5;}
-}
-
-/* TITLE */
+/* MAIN TITLE */
 h1{
-  font-size:84px;
-  letter-spacing:8px;
+  font-size:92px;
+  letter-spacing:10px;
   color:var(--accent);
-  z-index:1;
   text-shadow:0 0 30px rgba(0,255,153,0.25);
-  animation:flicker 2.8s infinite;
+  animation:flicker 2.6s infinite;
 }
 
 @keyframes flicker{
   0%,100%{opacity:1;}
-  50%{opacity:0.7;}
+  50%{opacity:0.72;}
 }
 
-/* SUBTEXT */
+/* SUB */
 .sub{
   margin-top:10px;
   font-size:14px;
   color:var(--muted);
-  z-index:1;
 }
 
 .desc{
   margin-top:10px;
-  max-width:480px;
+  max-width:520px;
   font-size:13px;
   color:var(--muted);
   line-height:1.5;
-  z-index:1;
 }
 
-/* CTA */
+/* BUTTON */
 button{
   margin-top:25px;
   padding:12px 18px;
@@ -111,23 +93,22 @@ button{
   background:transparent;
   color:var(--accent);
   cursor:pointer;
-  transition:0.2s;
-  z-index:1;
+  transition:0.25s;
 }
 
 button:hover{
   background:var(--accent);
-  color:black;
+  color:#000;
 }
 
-/* INFO BLOCK (bottom) */
+/* INFO BAR */
 .info{
   position:absolute;
-  bottom:30px;
+  bottom:25px;
   width:100%;
   display:flex;
   justify-content:center;
-  gap:40px;
+  gap:60px;
   font-size:12px;
   color:var(--muted);
 }
@@ -136,10 +117,24 @@ button:hover{
   text-align:center;
 }
 
-/* STATE CHANGE */
+/* STATE SHIFT */
 .active{
-  filter:hue-rotate(120deg) contrast(1.1);
+  filter:hue-rotate(140deg) contrast(1.2);
 }
+
+/* subtle shake when activated */
+.shake{
+  animation:shake 0.4s infinite;
+}
+
+@keyframes shake{
+  0%{transform:translate(0,0);}
+  25%{transform:translate(1px,-1px);}
+  50%{transform:translate(-1px,1px);}
+  75%{transform:translate(1px,1px);}
+  100%{transform:translate(0,0);}
+}
+
 </style>
 </head>
 
@@ -147,15 +142,13 @@ button:hover{
 
 <div class="wrap" id="wrap">
 
-  <div class="core"></div>
-
   <h1>SAFU</h1>
 
   <div class="sub">So Absolutely F#cked Up</div>
 
   <div class="desc">
-    Terra Classic anomaly signal detected.  
-    A controlled experiment in chaotic market behavior.
+    A controlled collapse of logic deployed on Terra Classic.  
+    Built from instability, sustained by attention.
   </div>
 
   <button onclick="enter()">ENTER SAFU</button>
@@ -169,13 +162,13 @@ button:hover{
   </div>
 
   <div>
-    <div>STATUS</div>
-    <div id="status">Unstable</div>
+    <div>STATE</div>
+    <div id="state">Dormant</div>
   </div>
 
   <div>
     <div>SIGNAL</div>
-    <div id="signal">Dormant</div>
+    <div id="signal">Low</div>
   </div>
 </div>
 
@@ -185,24 +178,27 @@ let active = false;
 
 function enter(){
   active = true;
-  document.body.classList.toggle("active");
 
-  document.getElementById("status").innerText = "Active";
-  document.getElementById("signal").innerText = "Awakened";
+  document.body.classList.add("active","shake");
 
-  const msgs = [
-    "liquidity signal shifting",
-    "community resonance detected",
-    "market instability rising",
-    "unknown force engaged",
-    "SAFU protocol stabilized... temporarily"
+  document.getElementById("state").innerText = "Active";
+  document.getElementById("signal").innerText = "Rising";
+
+  const signals = [
+    "liquidity distortion detected",
+    "community coherence unstable",
+    "market emotion overheating",
+    "SAFU resonance expanding",
+    "unknown behavioral loop forming"
   ];
 
   setInterval(()=>{
     if(!active) return;
+
     document.getElementById("signal").innerText =
-      msgs[Math.floor(Math.random()*msgs.length)];
-  }, 2000);
+      signals[Math.floor(Math.random()*signals.length)];
+
+  }, 1800);
 }
 
 </script>
