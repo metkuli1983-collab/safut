@@ -2,1545 +2,214 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>SAFU — So Absolutely F#Ked Up</title>
-
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>$SAFU — Terra Classic</title>
 
   <style>
-    *{
-      margin:0;
-      padding:0;
-      box-sizing:border-box;
+    :root {
+      --bg: #07070a;
+      --card: rgba(255,255,255,0.05);
+      --text: #eaeaea;
+      --accent: #00ff99;
+      --danger: #ff3b3b;
     }
 
-    body{
-      background:#050505;
-      color:white;
-      font-family:'Inter',sans-serif;
-      overflow-x:hidden;
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Courier New", monospace;
     }
 
-    body::before{
-      content:"";
-      position:fixed;
-      inset:0;
-      background:
-        radial-gradient(circle at top,#ff008850 0%,transparent 40%),
-        radial-gradient(circle at bottom,#ff4d0040 0%,transparent 35%);
-      z-index:-2;
+    body {
+      background: radial-gradient(circle at top, #101015, var(--bg));
+      color: var(--text);
+      overflow-x: hidden;
     }
 
-    .noise{
-      position:fixed;
-      inset:0;
-      opacity:0.04;
-      background-image:url("https://grainy-gradients.vercel.app/noise.svg");
-      z-index:-1;
-      pointer-events:none;
+    /* glitch background noise */
+    .noise {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: url("https://grainy-gradients.vercel.app/noise.svg");
+      opacity: 0.05;
+      pointer-events: none;
     }
 
-    header{
-      padding:24px 8%;
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-      border-bottom:1px solid #ffffff12;
+    header {
+      padding: 60px 20px;
+      text-align: center;
+    }
+
+    h1 {
+      font-size: 60px;
+      letter-spacing: 3px;
+      color: var(--accent);
+      text-shadow: 0 0 20px var(--accent);
+      animation: flicker 2.5s infinite;
+    }
+
+    .tagline {
+      margin-top: 10px;
+      font-size: 16px;
+      opacity: 0.7;
+    }
+
+    @keyframes flicker {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.6; }
+      60% { opacity: 1; }
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: auto;
+      padding: 20px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+      margin-top: 40px;
+    }
+
+    .card {
+      background: var(--card);
+      border: 1px solid rgba(255,255,255,0.1);
+      padding: 20px;
+      border-radius: 12px;
       backdrop-filter: blur(10px);
+      transition: 0.3s;
     }
 
-    .logo{
-      font-family:'Bebas Neue',sans-serif;
-      font-size:42px;
-      color:#ff0088;
-      letter-spacing:2px;
+    .card:hover {
+      transform: translateY(-5px) rotate(-1deg);
+      border-color: var(--accent);
+      box-shadow: 0 0 20px rgba(0,255,153,0.2);
     }
 
-    nav a{
-      color:white;
-      text-decoration:none;
-      margin-left:24px;
-      font-weight:600;
-      transition:0.2s;
+    .danger {
+      color: var(--danger);
     }
 
-    nav a:hover{
-      color:#ff0088;
+    .btn {
+      display: inline-block;
+      margin-top: 15px;
+      padding: 10px 15px;
+      border: 1px solid var(--accent);
+      color: var(--accent);
+      text-decoration: none;
+      border-radius: 8px;
+      transition: 0.2s;
     }
 
-    .hero{
-      min-height:90vh;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      text-align:center;
-      padding:80px 10%;
-      position:relative;
+    .btn:hover {
+      background: var(--accent);
+      color: black;
     }
 
-    .hero-content{
-      max-width:950px;
+    footer {
+      text-align: center;
+      margin: 60px 0 20px;
+      opacity: 0.4;
+      font-size: 12px;
     }
 
-    .hero h1{
-      font-family:'Bebas Neue',sans-serif;
-      font-size:clamp(80px,16vw,220px);
-      line-height:0.9;
-      color:white;
-      text-shadow:
-        0 0 20px #ff0088,
-        0 0 60px #ff008860;
+    .marquee {
+      white-space: nowrap;
+      overflow: hidden;
+      position: relative;
+      margin-top: 30px;
     }
 
-    .hero h2{
-      margin-top:10px;
-      font-size:clamp(20px,4vw,42px);
-      color:#ff0088;
-      font-weight:800;
-      text-transform:uppercase;
+    .marquee span {
+      display: inline-block;
+      padding-left: 100%;
+      animation: scroll 12s linear infinite;
+      color: var(--accent);
     }
 
-    .hero p{
-      margin:32px auto;
-      max-width:700px;
-      font-size:20px;
-      line-height:1.7;
-      color:#d1d1d1;
+    @keyframes scroll {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-100%); }
     }
 
-    .buttons{
-      display:flex;
-      gap:20px;
-      justify-content:center;
-      flex-wrap:wrap;
-      margin-top:40px;
-    }
-
-    .btn{
-      padding:18px 34px;
-      border-radius:18px;
-      text-decoration:none;
-      font-weight:800;
-      transition:0.25s;
-      font-size:16px;
-    }
-
-    .btn-primary{
-      background:#ff0088;
-      color:white;
-      box-shadow:0 0 30px #ff008860;
-    }
-
-    .btn-primary:hover{
-      transform:translateY(-4px) scale(1.03);
-    }
-
-    .btn-secondary{
-      border:2px solid #ffffff20;
-      color:white;
-      background:#ffffff08;
-    }
-
-    .btn-secondary:hover{
-      border-color:#ff0088;
-      color:#ff0088;
-    }
-
-    section{
-      padding:120px 10%;
-    }
-
-    .section-title{
-      font-family:'Bebas Neue',sans-serif;
-      font-size:72px;
-      margin-bottom:30px;
-      color:#ff0088;
-    }
-
-    .about-box,
-    .token-box,
-    .roadmap-box{
-      background:#111111;
-      border:1px solid #ffffff10;
-      border-radius:28px;
-      padding:40px;
-      box-shadow:0 0 40px #00000050;
-    }
-
-    .about-box p{
-      font-size:20px;
-      line-height:1.8;
-      color:#d8d8d8;
-    }
-
-    .token-grid{
-      display:grid;
-      grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-      gap:24px;
-      margin-top:30px;
-    }
-
-    .token-card{
-      background:#181818;
-      border-radius:22px;
-      padding:30px;
-      border:1px solid #ffffff10;
-      transition:0.2s;
-    }
-
-    .token-card:hover{
-      transform:translateY(-5px);
-      border-color:#ff008850;
-    }
-
-    .token-card h3{
-      color:#ff0088;
-      margin-bottom:10px;
-      font-size:24px;
-    }
-
-    .roadmap-step{
-      margin-bottom:28px;
-      padding-bottom:28px;
-      border-bottom:1px solid #ffffff12;
-    }
-
-    .roadmap-step:last-child{
-      border-bottom:none;
-    }
-
-    .roadmap-step h3{
-      color:#ff0088;
-      font-size:28px;
-      margin-bottom:10px;
-    }
-
-    footer{
-      padding:60px 10%;
-      text-align:center;
-      color:#8d8d8d;
-      border-top:1px solid #ffffff10;
-      font-size:15px;
-    }
-
-    @media(max-width:768px){
-
-      header{
-        flex-direction:column;
-        gap:20px;
-      }
-
-      nav a{
-        margin:0 10px;
-      }
-
-      .section-title{
-        font-size:54px;
-      }
-
-      .hero p{
-        font-size:18px;
-      }
-    }
   </style>
 </head>
 
 <body>
-
 <div class="noise"></div>
 
 <header>
-  <div class="logo">SAFU</div>
+  <h1>$SAFU</h1>
+  <div class="tagline">“not financial advice. not financial safety either.”</div>
 
-  <nav>
-    <a href="#about">About</a>
-    <a href="#tokenomics">Tokenomics</a>
-    <a href="#roadmap">Roadmap</a>
-  </nav>
+  <div class="marquee">
+    <span>⚡ SAFU MODE ACTIVE • TERAA CLASSIC CHAOS • NO ROADMAP • ONLY VIBES • COMMUNITY CONTROLLED ⚡</span>
+  </div>
 </header>
 
-<section class="hero">
+<div class="container">
 
-  <div class="hero-content">
+  <div class="grid">
 
-    <h1>SAFU</h1>
+    <div class="card">
+      <h2>What is $SAFU?</h2>
+      <p>
+        A fully chaotic Terra Classic experiment.
+        No promises. No illusions. Just pure on-chain vibes and community madness.
+      </p>
+    </div>
 
-    <h2>So Absolutely F#Ked Up</h2>
+    <div class="card">
+      <h2>Token Status</h2>
+      <p class="danger">⚠ SAFU? depends who you ask ⚠</p>
+      <p>Liquidity: questionable</p>
+      <p>Energy: maximal</p>
+      <p>Exit strategy: none</p>
+    </div>
 
-    <p>
-      A meme token forged from destroyed portfolios,
-      emotional damage, and pure degen energy.
-      No promises. No utility. Just vibes and survival instincts.
-    </p>
+    <div class="card">
+      <h2>Utility</h2>
+      <p>✔ memes</p>
+      <p>✔ speculation</p>
+      <p>✔ community raids</p>
+      <p>✔ existential confusion</p>
+    </div>
 
-    <div class="buttons">
-      <a href="#" class="btn btn-primary">BUY SAFU</a>
-      <a href="#" class="btn btn-secondary">VIEW CHART</a>
-      <a href="#" class="btn btn-secondary">JOIN TELEGRAM</a>
+    <div class="card">
+      <h2>Contract</h2>
+      <p>Terra Classic</p>
+      <p>Chain-native chaos deployment</p>
+      <a class="btn" href="#">View on explorer</a>
+    </div>
+
+    <div class="card">
+      <h2>Roadmap</h2>
+      <p>Phase 1: launch</p>
+      <p>Phase 2: panic</p>
+      <p>Phase 3: memes survive</p>
+      <p>Phase 4: unknown physics</p>
+    </div>
+
+    <div class="card">
+      <h2>Community</h2>
+      <p>Telegram raids</p>
+      <p>Twitter chaos loops</p>
+      <p>Degens only</p>
+      <p>No seriousness allowed</p>
     </div>
 
   </div>
-
-</section>
-
-<section id="about">
-
-  <h2 class="section-title">ABOUT</h2>
-
-  <div class="about-box">
-
-    <p>
-      SAFU was born after staring at rugged charts for 17 hours straight
-      and pretending everything was still under control.
-      <br><br>
-      This project has zero utility, questionable decision making,
-      and enough emotional support for exactly nobody.
-      <br><br>
-      Welcome home.
-    </p>
-
-  </div>
-
-</section>
-
-<section id="tokenomics">
-
-  <h2 class="section-title">TOKENOMICS</h2>
-
-  <div class="token-box">
-
-    <div class="token-grid">
-
-      <div class="token-card">
-        <h3>UTILITY</h3>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-
-<title>SAFU — So Absolutely F#Ked Up</title>
-
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
-
-<style>
-
-*{
-  margin:0;
-  padding:0;
-  box-sizing:border-box;
-}
-
-html{
-  scroll-behavior:smooth;
-}
-
-body{
-  background:#050505;
-  color:white;
-  overflow-x:hidden;
-  font-family:'Inter',sans-serif;
-}
-
-/* BACKGROUND */
-
-body::before{
-  content:"";
-  position:fixed;
-  inset:0;
-  background:
-  radial-gradient(circle at top,#ff008840 0%,transparent 35%),
-  radial-gradient(circle at bottom,#ff4d0040 0%,transparent 35%);
-  z-index:-3;
-}
-
-.noise{
-  position:fixed;
-  inset:0;
-  background-image:url("https://grainy-gradients.vercel.app/noise.svg");
-  opacity:0.05;
-  pointer-events:none;
-  z-index:-2;
-}
-
-.glitch-line{
-  position:fixed;
-  width:100%;
-  height:2px;
-  background:#ff0088;
-  opacity:0.1;
-  animation:glitchMove 8s linear infinite;
-  z-index:-1;
-}
-
-@keyframes glitchMove{
-  0%{top:-10%;}
-  100%{top:120%;}
-}
-
-/* NAV */
-
-header{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  padding:24px 8%;
-  position:fixed;
-  width:100%;
-  top:0;
-  background:#050505d9;
-  backdrop-filter:blur(10px);
-  z-index:999;
-  border-bottom:1px solid #ffffff10;
-}
-
-.logo{
-  font-family:'Bebas Neue',sans-serif;
-  font-size:46px;
-  color:#ff0088;
-  letter-spacing:3px;
-  cursor:pointer;
-  transition:0.2s;
-}
-
-.logo:hover{
-  transform:scale(1.06) rotate(-2deg);
-}
-
-nav a{
-  text-decoration:none;
-  color:white;
-  margin-left:24px;
-  font-weight:700;
-  transition:0.2s;
-}
-
-nav a:hover{
-  color:#ff0088;
-}
-
-/* HERO */
-
-.hero{
-  min-height:100vh;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  text-align:center;
-  padding:120px 10%;
-  position:relative;
-}
-
-.hero-content{
-  max-width:1100px;
-}
-
-.hero h1{
-  font-family:'Bebas Neue',sans-serif;
-  font-size:clamp(100px,20vw,260px);
-  line-height:0.85;
-  text-shadow:
-  0 0 15px #ff0088,
-  0 0 40px #ff008860;
-  animation:flicker 4s infinite;
-}
-
-@keyframes flicker{
-  0%,18%,22%,25%,53%,57%,100%{
-    opacity:1;
-  }
-  20%,24%,55%{
-    opacity:0.4;
-  }
-}
-
-.hero h2{
-  color:#ff0088;
-  margin-top:10px;
-  font-size:clamp(24px,5vw,48px);
-  font-weight:800;
-}
-
-.status{
-  margin-top:28px;
-  font-size:20px;
-  color:#bbbbbb;
-  min-height:40px;
-}
-
-.hero p{
-  max-width:800px;
-  margin:32px auto;
-  font-size:20px;
-  line-height:1.8;
-  color:#d4d4d4;
-}
-
-.button-group{
-  display:flex;
-  justify-content:center;
-  flex-wrap:wrap;
-  gap:18px;
-  margin-top:42px;
-}
-
-.btn{
-  padding:18px 32px;
-  border-radius:18px;
-  font-weight:800;
-  text-decoration:none;
-  transition:0.25s;
-  cursor:pointer;
-  border:none;
-  font-size:15px;
-}
-
-.btn-primary{
-  background:#ff0088;
-  color:white;
-  box-shadow:0 0 30px #ff008870;
-}
-
-.btn-primary:hover{
-  transform:translateY(-4px) scale(1.03);
-}
-
-.btn-secondary{
-  background:#111;
-  border:1px solid #ffffff14;
-  color:white;
-}
-
-.btn-secondary:hover{
-  border-color:#ff0088;
-  color:#ff0088;
-}
-
-/* SECTIONS */
-
-section{
-  padding:120px 10%;
-}
-
-.section-title{
-  font-family:'Bebas Neue',sans-serif;
-  font-size:72px;
-  margin-bottom:30px;
-  color:#ff0088;
-}
-
-.card{
-  background:#111111;
-  border:1px solid #ffffff10;
-  border-radius:30px;
-  padding:40px;
-  box-shadow:0 0 40px #00000060;
-}
-
-/* DAMAGE CHART */
-
-.chart-box{
-  margin-top:40px;
-  height:320px;
-  position:relative;
-  overflow:hidden;
-  border-radius:24px;
-  background:#090909;
-  border:1px solid #ffffff12;
-}
-
-.chart-line{
-  position:absolute;
-  width:140%;
-  height:4px;
-  background:#ff0088;
-  top:20%;
-  left:-10%;
-  transform:rotate(-12deg);
-  box-shadow:0 0 18px #ff0088;
-  animation:crash 5s infinite ease-in-out;
-}
-
-@keyframes crash{
-  0%{
-    top:20%;
-  }
-  30%{
-    top:18%;
-  }
-  50%{
-    top:50%;
-  }
-  70%{
-    top:82%;
-  }
-  100%{
-    top:95%;
-  }
-}
-
-.chart-warning{
-  position:absolute;
-  bottom:20px;
-  left:20px;
-  color:#ff4d4d;
-  font-weight:800;
-  font-size:20px;
-}
-
-/* TOKENOMICS */
-
-.token-grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-  gap:24px;
-  margin-top:30px;
-}
-
-.token-card{
-  background:#181818;
-  padding:28px;
-  border-radius:24px;
-  border:1px solid #ffffff10;
-  transition:0.25s;
-}
-
-.token-card:hover{
-  transform:translateY(-5px);
-  border-color:#ff008860;
-}
-
-.token-card h3{
-  color:#ff0088;
-  margin-bottom:10px;
-}
-
-/* PANIC BUTTON */
-
-.panic{
-  margin-top:40px;
-  text-align:center;
-}
-
-.panic button{
-  width:180px;
-  height:180px;
-  border-radius:50%;
-  border:none;
-  background:red;
-  color:white;
-  font-size:28px;
-  font-weight:900;
-  cursor:pointer;
-  box-shadow:0 0 40px red;
-  transition:0.2s;
-}
-
-.panic button:hover{
-  transform:scale(1.06);
-}
-
-/* FOOTER */
-
-footer{
-  padding:70px 10%;
-  text-align:center;
-  color:#7d7d7d;
-  border-top:1px solid #ffffff10;
-}
-
-/* MOBILE */
-
-@media(max-width:768px){
-
-  header{
-    flex-direction:column;
-    gap:20px;
-  }
-
-  nav a{
-    margin:0 10px;
-  }
-
-  .section-title{
-    font-size:52px;
-  }
-
-  .hero p{
-    font-size:18px;
-  }
-
-  .panic button{
-    width:140px;
-    height:140px;
-    font-size:22px;
-  }
-
-}
-
-</style>
-</head>
-
-<body>
-
-<div class="noise"></div>
-<div class="glitch-line"></div>
-
-<header>
-
-<div class="logo" id="logo">SAFU</div>
-
-<nav>
-<a href="#about">About</a>
-<a href="#damage">Damage</a>
-<a href="#tokenomics">Tokenomics</a>
-</nav>
-
-</header>
-
-<section class="hero">
-
-<div class="hero-content">
-
-<h1>SAFU</h1>
-
-<h2>SO ABSOLUTELY F#KED UP</h2>
-
-<div class="status" id="status">
-Liquidity status uncertain...
 </div>
-
-<p>
-A meme token forged from destroyed portfolios,
-emotional trauma, and terminal degen behavior.
-No utility. No roadmap confidence.
-Only survival instincts.
-</p>
-
-<div class="button-group">
-
-<button class="btn btn-primary" onclick="panicMode()">
-ENTER PANIC MODE
-</button>
-
-<button class="btn btn-secondary" onclick="inspectDamage()">
-INSPECT DAMAGE
-</button>
-
-<button class="btn btn-secondary" onclick="fakeWallet()">
-CONNECT WALLET
-</button>
-
-</div>
-
-</div>
-
-</section>
-
-<section id="about">
-
-<h2 class="section-title">ABOUT</h2>
-
-<div class="card">
-
-<p style="font-size:20px;line-height:1.9;color:#d4d4d4;">
-
-SAFU was created after staring at rugged charts for
-17 hours straight while whispering
-“it will recover.”
-
-<br><br>
-
-This ecosystem is powered entirely by:
-copium, bad decisions, and emotionally damaged holders.
-
-<br><br>
-
-Welcome home.
-
-</p>
-
-</div>
-
-</section>
-
-<section id="damage">
-
-<h2 class="section-title">MARKET DAMAGE</h2>
-
-<div class="card">
-
-<p style="margin-bottom:30px;font-size:20px;color:#cfcfcf;">
-Live chart technology unavailable due to catastrophic conditions.
-</p>
-
-<div class="chart-box">
-
-<div class="chart-line"></div>
-
-<div class="chart-warning">
-⚠ LIQUIDITY CRITICAL
-</div>
-
-</div>
-
-</div>
-
-</section>
-
-<section id="tokenomics">
-
-<h2 class="section-title">TOKENOMICS</h2>
-
-<div class="token-grid">
-
-<div class="token-card">
-<h3>UTILITY</h3>
-<p>None detected.</p>
-</div>
-
-<div class="token-card">
-<h3>SUPPLY</h3>
-<p>Emotionally infinite.</p>
-</div>
-
-<div class="token-card">
-<h3>COMMUNITY</h3>
-<p>Traumatized but active.</p>
-</div>
-
-<div class="token-card">
-<h3>ROADMAP</h3>
-<p>Mostly panic.</p>
-</div>
-
-</div>
-
-<div class="panic">
-
-<h2 style="margin-bottom:30px;">
-Emergency Liquidation Button
-</h2>
-
-<button onclick="panicMode()">
-PANIC
-</button>
-
-</div>
-
-</section>
 
 <footer>
-
-NOT FINANCIAL ADVICE • NOT EMOTIONAL SUPPORT • © SAFU
-
+  $SAFU — built for Terra Classic chaos experiments • deploy via Vercel
 </footer>
-
-<script>
-
-/* STATUS ROTATOR */
-
-const statusMessages = [
-"Liquidity status uncertain...",
-"Emotional damage detected...",
-"Market conditions catastrophic...",
-"Chart unavailable due to trauma...",
-"Community coping aggressively...",
-"Someone bought the top again..."
-];
-
-let statusIndex = 0;
-
-setInterval(() => {
-
-statusIndex = (statusIndex + 1) % statusMessages.length;
-
-document.getElementById("status").innerText =
-statusMessages[statusIndex];
-
-}, 2500);
-
-/* PANIC MODE */
-
-function panicMode(){
-
-document.body.style.animation = "shake 0.4s";
-
-setTimeout(() => {
-document.body.style.animation = "";
-}, 500);
-
-alert("⚠ PANIC MODE ACTIVATED ⚠\n\nSELLING WOULD REQUIRE LIQUIDITY");
-
-}
-
-/* DAMAGE BUTTON */
-
-function inspectDamage(){
-
-alert(
-"PORTFOLIO ANALYSIS COMPLETE\n\nSTATUS: SO ABSOLUTELY F#KED UP"
-);
-
-}
-
-/* FAKE WALLET */
-
-function fakeWallet(){
-
-alert(
-"CONNECT WALLET TO LOSE EVERYTHING FASTER\n\nEven scammers rejected this token."
-);
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-
-<title>SAFU — So Absolutely F#Ked Up</title>
-
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
-
-<style>
-
-*{
-  margin:0;
-  padding:0;
-  box-sizing:border-box;
-}
-
-html{
-  scroll-behavior:smooth;
-}
-
-body{
-  background:#050505;
-  color:white;
-  font-family:'Inter',sans-serif;
-  overflow-x:hidden;
-}
-
-/* BACKGROUND */
-
-body::before{
-  content:"";
-  position:fixed;
-  inset:0;
-  background:
-    radial-gradient(circle at top,#ff008820 0%,transparent 40%),
-    radial-gradient(circle at bottom,#ff4d0020 0%,transparent 40%);
-  z-index:-2;
-}
-
-.noise{
-  position:fixed;
-  inset:0;
-  background-image:url("https://grainy-gradients.vercel.app/noise.svg");
-  opacity:0.04;
-  pointer-events:none;
-  z-index:-1;
-}
-
-/* NAV */
-
-header{
-  position:sticky;
-  top:0;
-  z-index:100;
-  background:#050505ee;
-  backdrop-filter:blur(12px);
-  border-bottom:1px solid #ffffff10;
-}
-
-.nav-container{
-  max-width:1100px;
-  margin:auto;
-  padding:18px 20px;
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-}
-
-.logo{
-  font-family:'Bebas Neue',sans-serif;
-  font-size:52px;
-  color:#ff0088;
-  letter-spacing:3px;
-}
-
-nav{
-  display:flex;
-  gap:20px;
-}
-
-nav a{
-  color:white;
-  text-decoration:none;
-  font-weight:700;
-  opacity:0.8;
-  transition:0.2s;
-}
-
-nav a:hover{
-  color:#ff0088;
-  opacity:1;
-}
-
-/* HERO */
-
-.hero{
-  padding:70px 20px 40px;
-  display:flex;
-  justify-content:center;
-}
-
-.hero-card{
-  width:100%;
-  max-width:460px;
-  background:
-    linear-gradient(180deg,#121212 0%,#0b0b0b 100%);
-  border:1px solid #ffffff12;
-  border-radius:34px;
-  padding:42px 26px;
-  text-align:center;
-  box-shadow:
-    0 0 40px #00000070,
-    0 0 20px #ff008820;
-}
-
-.hero-card h1{
-  font-family:'Bebas Neue',sans-serif;
-  font-size:96px;
-  line-height:0.9;
-  margin-bottom:10px;
-  color:white;
-  text-shadow:0 0 20px #ff008860;
-}
-
-.hero-card h2{
-  color:#ff0088;
-  font-size:36px;
-  line-height:1.05;
-  margin-bottom:26px;
-  font-weight:800;
-}
-
-.status{
-  color:#9c9c9c;
-  font-size:17px;
-  margin-bottom:26px;
-  min-height:25px;
-}
-
-.desc{
-  color:#d0d0d0;
-  font-size:17px;
-  line-height:1.8;
-}
-
-.hero-buttons{
-  display:flex;
-  flex-direction:column;
-  gap:14px;
-  margin-top:32px;
-}
-
-.hero-buttons button{
-  border:none;
-  padding:16px;
-  border-radius:18px;
-  font-size:15px;
-  font-weight:800;
-  cursor:pointer;
-  transition:0.2s;
-}
-
-.primary-btn{
-  background:#ff0088;
-  color:white;
-  box-shadow:0 0 20px #ff008850;
-}
-
-.primary-btn:hover{
-  transform:translateY(-2px);
-}
-
-.secondary-btn{
-  background:#171717;
-  color:white;
-  border:1px solid #ffffff10;
-}
-
-.secondary-btn:hover{
-  border-color:#ff0088;
-  color:#ff0088;
-}
-
-/* SECTIONS */
-
-.section{
-  padding:30px 20px;
-  display:flex;
-  justify-content:center;
-}
-
-.section-card{
-  width:100%;
-  max-width:460px;
-  background:#101010;
-  border-radius:30px;
-  border:1px solid #ffffff10;
-  padding:28px 24px;
-}
-
-.section-title{
-  font-family:'Bebas Neue',sans-serif;
-  font-size:48px;
-  color:#ff0088;
-  margin-bottom:18px;
-}
-
-.section-text{
-  color:#d0d0d0;
-  line-height:1.8;
-  font-size:16px;
-}
-
-/* DAMAGE */
-
-.damage-box{
-  margin-top:24px;
-  background:#070707;
-  border-radius:24px;
-  height:180px;
-  position:relative;
-  overflow:hidden;
-  border:1px solid #ffffff10;
-}
-
-.chart-line{
-  position:absolute;
-  width:100%;
-  height:4px;
-  background:#ff0088;
-  top:35%;
-  left:0;
-  transform:rotate(-10deg);
-  box-shadow:0 0 16px #ff0088;
-  animation:crash 5s infinite ease-in-out;
-}
-
-@keyframes crash{
-
-  0%{
-    top:20%;
-  }
-
-  50%{
-    top:55%;
-  }
-
-  100%{
-    top:88%;
-  }
-
-}
-
-.damage-warning{
-  position:absolute;
-  left:18px;
-  bottom:18px;
-  color:#ff4d4d;
-  font-size:14px;
-  font-weight:800;
-}
-
-/* TOKENOMICS */
-
-.token-grid{
-  display:grid;
-  grid-template-columns:1fr;
-  gap:14px;
-  margin-top:20px;
-}
-
-.token-box{
-  background:#171717;
-  border:1px solid #ffffff10;
-  border-radius:20px;
-  padding:18px;
-}
-
-.token-box h3{
-  color:#ff0088;
-  margin-bottom:8px;
-  font-size:18px;
-}
-
-.token-box p{
-  color:#d0d0d0;
-  font-size:15px;
-}
-
-/* PANIC */
-
-.panic-wrap{
-  margin-top:30px;
-  display:flex;
-  justify-content:center;
-}
-
-.panic-btn{
-  width:110px;
-  height:110px;
-  border-radius:50%;
-  border:none;
-  background:red;
-  color:white;
-  font-size:20px;
-  font-weight:900;
-  cursor:pointer;
-  box-shadow:0 0 30px red;
-}
-
-/* FOOTER */
-
-footer{
-  text-align:center;
-  padding:50px 20px;
-  color:#7e7e7e;
-  font-size:13px;
-}
-
-/* DESKTOP */
-
-@media(min-width:768px){
-
-  .hero-card,
-  .section-card{
-    max-width:760px;
-  }
-
-  .hero-card h1{
-    font-size:140px;
-  }
-
-  .hero-card h2{
-    font-size:52px;
-  }
-
-  .hero-buttons{
-    flex-direction:row;
-  }
-
-  .hero-buttons button{
-    flex:1;
-  }
-
-  .token-grid{
-    grid-template-columns:1fr 1fr;
-  }
-
-}
-
-</style>
-</head>
-
-<body>
-
-<div class="noise"></div>
-
-<header>
-
-<div class="nav-container">
-
-<div class="logo">SAFU</div>
-
-<nav>
-<a href="#about">About</a>
-<a href="#damage">Damage</a>
-<a href="#tokenomics">Tokenomics</a>
-</nav>
-
-</div>
-
-</header>
-
-<!-- HERO -->
-
-<section class="hero">
-
-<div class="hero-card">
-
-<h1>SAFU</h1>
-
-<h2>
-SO ABSOLUTELY<br>
-F#KED UP
-</h2>
-
-<div class="status" id="status">
-Community coping aggressively...
-</div>
-
-<p class="desc">
-A meme token forged from destroyed portfolios,
-rug pull trauma, and terminal degen behavior.
-No utility. No emotional support.
-Only survival instincts.
-</p>
-
-<div class="hero-buttons">
-
-<button class="primary-btn" onclick="panicMode()">
-ENTER PANIC MODE
-</button>
-
-<button class="secondary-btn" onclick="inspectDamage()">
-INSPECT DAMAGE
-</button>
-
-<button class="secondary-btn" onclick="fakeWallet()">
-CONNECT WALLET
-</button>
-
-</div>
-
-</div>
-
-</section>
-
-<!-- ABOUT -->
-
-<section class="section" id="about">
-
-<div class="section-card">
-
-<h2 class="section-title">
-ABOUT
-</h2>
-
-<p class="section-text">
-SAFU was born after staring at catastrophic charts
-for 17 hours straight while whispering:
-“it will recover.”
-<br><br>
-This ecosystem runs entirely on:
-copium, bad decisions, and emotionally damaged holders.
-</p>
-
-</div>
-
-</section>
-
-<!-- DAMAGE -->
-
-<section class="section" id="damage">
-
-<div class="section-card">
-
-<h2 class="section-title">
-MARKET DAMAGE
-</h2>
-
-<p class="section-text">
-Live chart technology unavailable due to catastrophic conditions.
-</p>
-
-<div class="damage-box">
-
-<div class="chart-line"></div>
-
-<div class="damage-warning">
-⚠ LIQUIDITY CRITICAL
-</div>
-
-</div>
-
-</div>
-
-</section>
-
-<!-- TOKENOMICS -->
-
-<section class="section" id="tokenomics">
-
-<div class="section-card">
-
-<h2 class="section-title">
-TOKENOMICS
-</h2>
-
-<div class="token-grid">
-
-<div class="token-box">
-<h3>UTILITY</h3>
-<p>None detected.</p>
-</div>
-
-<div class="token-box">
-<h3>SUPPLY</h3>
-<p>Emotionally infinite.</p>
-</div>
-
-<div class="token-box">
-<h3>COMMUNITY</h3>
-<p>Traumatized but active.</p>
-</div>
-
-<div class="token-box">
-<h3>ROADMAP</h3>
-<p>Mostly panic.</p>
-</div>
-
-</div>
-
-<div class="panic-wrap">
-
-<button class="panic-btn" onclick="panicMode()">
-PANIC
-</button>
-
-</div>
-
-</div>
-
-</section>
-
-<footer>
-
-NOT FINANCIAL ADVICE • NOT EMOTIONAL SUPPORT • © SAFU
-
-</footer>
-
-<script>
-
-/* STATUS ROTATOR */
-
-const statusMessages = [
-
-"Community coping aggressively...",
-"Liquidity status uncertain...",
-"Someone bought the top again...",
-"Market conditions catastrophic...",
-"Chart unavailable due to trauma...",
-"Emotionally damaged holders detected..."
-
-];
-
-let currentStatus = 0;
-
-setInterval(() => {
-
-currentStatus =
-(currentStatus + 1) % statusMessages.length;
-
-document.getElementById("status").innerText =
-statusMessages[currentStatus];
-
-}, 2500);
-
-/* BUTTONS */
-
-function panicMode(){
-
-showPopup(
-"⚠ PANIC MODE ACTIVATED ⚠",
-"Selling would require liquidity."
-);
-
-}
-
-function inspectDamage(){
-
-showPopup(
-"PORTFOLIO STATUS",
-"So Absolutely F#Ked Up"
-);
-
-}
-
-function fakeWallet(){
-
-showPopup(
-"WALLET CONNECTION FAILED",
-"Even scammers rejected this token."
-);
-
-}
-
-/* CUSTOM POPUP */
-
-function showPopup(title,message){
-
-const popup = document.createElement("div");
-
-popup.innerHTML = `
-<div style="
-position:fixed;
-inset:0;
-background:#000000aa;
-display:flex;
-align-items:center;
-justify-content:center;
-z-index:9999;
-padding:20px;
-">
-
-<div style="
-background:#111;
-border:1px solid #ffffff10;
-border-radius:24px;
-padding:30px;
-max-width:340px;
-width:100%;
-text-align:center;
-">
-
-<h2 style="
-color:#ff0088;
-margin-bottom:16px;
-font-size:24px;
-">
-${title}
-</h2>
-
-<p style="
-color:#d0d0d0;
-line-height:1.7;
-margin-bottom:22px;
-">
-${message}
-</p>
-
-<button id="closePopup" style="
-background:#ff0088;
-border:none;
-padding:12px 20px;
-border-radius:14px;
-color:white;
-font-weight:800;
-cursor:pointer;
-">
-CLOSE
-</button>
-
-</div>
-</div>
-`;
-
-document.body.appendChild(popup);
-
-document
-.getElementById("closePopup")
-.onclick = () => popup.remove();
-
-}
-
-</script>
 
 </body>
 </html>
