@@ -893,63 +893,654 @@ function fakeWallet(){
 alert(
 "CONNECT WALLET TO LOSE EVERYTHING FASTER\n\nEven scammers rejected this token."
 );
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+<title>SAFU — So Absolutely F#Ked Up</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+}
+
+html{
+  scroll-behavior:smooth;
+}
+
+body{
+  background:#050505;
+  color:white;
+  font-family:'Inter',sans-serif;
+  overflow-x:hidden;
+}
+
+/* BACKGROUND */
+
+body::before{
+  content:"";
+  position:fixed;
+  inset:0;
+  background:
+    radial-gradient(circle at top,#ff008820 0%,transparent 40%),
+    radial-gradient(circle at bottom,#ff4d0020 0%,transparent 40%);
+  z-index:-2;
+}
+
+.noise{
+  position:fixed;
+  inset:0;
+  background-image:url("https://grainy-gradients.vercel.app/noise.svg");
+  opacity:0.04;
+  pointer-events:none;
+  z-index:-1;
+}
+
+/* NAV */
+
+header{
+  position:sticky;
+  top:0;
+  z-index:100;
+  background:#050505ee;
+  backdrop-filter:blur(12px);
+  border-bottom:1px solid #ffffff10;
+}
+
+.nav-container{
+  max-width:1100px;
+  margin:auto;
+  padding:18px 20px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+
+.logo{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:52px;
+  color:#ff0088;
+  letter-spacing:3px;
+}
+
+nav{
+  display:flex;
+  gap:20px;
+}
+
+nav a{
+  color:white;
+  text-decoration:none;
+  font-weight:700;
+  opacity:0.8;
+  transition:0.2s;
+}
+
+nav a:hover{
+  color:#ff0088;
+  opacity:1;
+}
+
+/* HERO */
+
+.hero{
+  padding:70px 20px 40px;
+  display:flex;
+  justify-content:center;
+}
+
+.hero-card{
+  width:100%;
+  max-width:460px;
+  background:
+    linear-gradient(180deg,#121212 0%,#0b0b0b 100%);
+  border:1px solid #ffffff12;
+  border-radius:34px;
+  padding:42px 26px;
+  text-align:center;
+  box-shadow:
+    0 0 40px #00000070,
+    0 0 20px #ff008820;
+}
+
+.hero-card h1{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:96px;
+  line-height:0.9;
+  margin-bottom:10px;
+  color:white;
+  text-shadow:0 0 20px #ff008860;
+}
+
+.hero-card h2{
+  color:#ff0088;
+  font-size:36px;
+  line-height:1.05;
+  margin-bottom:26px;
+  font-weight:800;
+}
+
+.status{
+  color:#9c9c9c;
+  font-size:17px;
+  margin-bottom:26px;
+  min-height:25px;
+}
+
+.desc{
+  color:#d0d0d0;
+  font-size:17px;
+  line-height:1.8;
+}
+
+.hero-buttons{
+  display:flex;
+  flex-direction:column;
+  gap:14px;
+  margin-top:32px;
+}
+
+.hero-buttons button{
+  border:none;
+  padding:16px;
+  border-radius:18px;
+  font-size:15px;
+  font-weight:800;
+  cursor:pointer;
+  transition:0.2s;
+}
+
+.primary-btn{
+  background:#ff0088;
+  color:white;
+  box-shadow:0 0 20px #ff008850;
+}
+
+.primary-btn:hover{
+  transform:translateY(-2px);
+}
+
+.secondary-btn{
+  background:#171717;
+  color:white;
+  border:1px solid #ffffff10;
+}
+
+.secondary-btn:hover{
+  border-color:#ff0088;
+  color:#ff0088;
+}
+
+/* SECTIONS */
+
+.section{
+  padding:30px 20px;
+  display:flex;
+  justify-content:center;
+}
+
+.section-card{
+  width:100%;
+  max-width:460px;
+  background:#101010;
+  border-radius:30px;
+  border:1px solid #ffffff10;
+  padding:28px 24px;
+}
+
+.section-title{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:48px;
+  color:#ff0088;
+  margin-bottom:18px;
+}
+
+.section-text{
+  color:#d0d0d0;
+  line-height:1.8;
+  font-size:16px;
+}
+
+/* DAMAGE */
+
+.damage-box{
+  margin-top:24px;
+  background:#070707;
+  border-radius:24px;
+  height:180px;
+  position:relative;
+  overflow:hidden;
+  border:1px solid #ffffff10;
+}
+
+.chart-line{
+  position:absolute;
+  width:100%;
+  height:4px;
+  background:#ff0088;
+  top:35%;
+  left:0;
+  transform:rotate(-10deg);
+  box-shadow:0 0 16px #ff0088;
+  animation:crash 5s infinite ease-in-out;
+}
+
+@keyframes crash{
+
+  0%{
+    top:20%;
+  }
+
+  50%{
+    top:55%;
+  }
+
+  100%{
+    top:88%;
+  }
 
 }
 
-/* SECRET LOGO CLICK */
+.damage-warning{
+  position:absolute;
+  left:18px;
+  bottom:18px;
+  color:#ff4d4d;
+  font-size:14px;
+  font-weight:800;
+}
 
-let clicks = 0;
+/* TOKENOMICS */
 
-document.getElementById("logo").addEventListener("click", () => {
+.token-grid{
+  display:grid;
+  grid-template-columns:1fr;
+  gap:14px;
+  margin-top:20px;
+}
 
-clicks++;
+.token-box{
+  background:#171717;
+  border:1px solid #ffffff10;
+  border-radius:20px;
+  padding:18px;
+}
 
-if(clicks >= 10){
+.token-box h3{
+  color:#ff0088;
+  margin-bottom:8px;
+  font-size:18px;
+}
 
-document.body.style.filter = "hue-rotate(180deg)";
+.token-box p{
+  color:#d0d0d0;
+  font-size:15px;
+}
 
-alert(
-"🚨 DEV LEFT 🚨\n\njk... maybe"
-);
+/* PANIC */
 
-clicks = 0;
+.panic-wrap{
+  margin-top:30px;
+  display:flex;
+  justify-content:center;
+}
+
+.panic-btn{
+  width:110px;
+  height:110px;
+  border-radius:50%;
+  border:none;
+  background:red;
+  color:white;
+  font-size:20px;
+  font-weight:900;
+  cursor:pointer;
+  box-shadow:0 0 30px red;
+}
+
+/* FOOTER */
+
+footer{
+  text-align:center;
+  padding:50px 20px;
+  color:#7e7e7e;
+  font-size:13px;
+}
+
+/* DESKTOP */
+
+@media(min-width:768px){
+
+  .hero-card,
+  .section-card{
+    max-width:760px;
+  }
+
+  .hero-card h1{
+    font-size:140px;
+  }
+
+  .hero-card h2{
+    font-size:52px;
+  }
+
+  .hero-buttons{
+    flex-direction:row;
+  }
+
+  .hero-buttons button{
+    flex:1;
+  }
+
+  .token-grid{
+    grid-template-columns:1fr 1fr;
+  }
 
 }
 
-});
+</style>
+</head>
 
-/* SHAKE EFFECT */
+<body>
 
-const style = document.createElement('style');
+<div class="noise"></div>
 
-style.innerHTML = `
-@keyframes shake{
-0%{transform:translate(2px,2px);}
-25%{transform:translate(-2px,3px);}
-50%{transform:translate(3px,-2px);}
-75%{transform:translate(-3px,2px);}
-100%{transform:translate(2px,-2px);}
-}
-`;
+<header>
 
-document.head.appendChild(style);
+<div class="nav-container">
 
-</script>
+<div class="logo">SAFU</div>
 
-</body>
-</html>
-oadmap-step">
-      <h3>PHASE 4</h3>
-      <p>Maybe recover. Probably not.</p>
-    </div>
+<nav>
+<a href="#about">About</a>
+<a href="#damage">Damage</a>
+<a href="#tokenomics">Tokenomics</a>
+</nav>
 
-  </div>
+</div>
+
+</header>
+
+<!-- HERO -->
+
+<section class="hero">
+
+<div class="hero-card">
+
+<h1>SAFU</h1>
+
+<h2>
+SO ABSOLUTELY<br>
+F#KED UP
+</h2>
+
+<div class="status" id="status">
+Community coping aggressively...
+</div>
+
+<p class="desc">
+A meme token forged from destroyed portfolios,
+rug pull trauma, and terminal degen behavior.
+No utility. No emotional support.
+Only survival instincts.
+</p>
+
+<div class="hero-buttons">
+
+<button class="primary-btn" onclick="panicMode()">
+ENTER PANIC MODE
+</button>
+
+<button class="secondary-btn" onclick="inspectDamage()">
+INSPECT DAMAGE
+</button>
+
+<button class="secondary-btn" onclick="fakeWallet()">
+CONNECT WALLET
+</button>
+
+</div>
+
+</div>
+
+</section>
+
+<!-- ABOUT -->
+
+<section class="section" id="about">
+
+<div class="section-card">
+
+<h2 class="section-title">
+ABOUT
+</h2>
+
+<p class="section-text">
+SAFU was born after staring at catastrophic charts
+for 17 hours straight while whispering:
+“it will recover.”
+<br><br>
+This ecosystem runs entirely on:
+copium, bad decisions, and emotionally damaged holders.
+</p>
+
+</div>
+
+</section>
+
+<!-- DAMAGE -->
+
+<section class="section" id="damage">
+
+<div class="section-card">
+
+<h2 class="section-title">
+MARKET DAMAGE
+</h2>
+
+<p class="section-text">
+Live chart technology unavailable due to catastrophic conditions.
+</p>
+
+<div class="damage-box">
+
+<div class="chart-line"></div>
+
+<div class="damage-warning">
+⚠ LIQUIDITY CRITICAL
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+<!-- TOKENOMICS -->
+
+<section class="section" id="tokenomics">
+
+<div class="section-card">
+
+<h2 class="section-title">
+TOKENOMICS
+</h2>
+
+<div class="token-grid">
+
+<div class="token-box">
+<h3>UTILITY</h3>
+<p>None detected.</p>
+</div>
+
+<div class="token-box">
+<h3>SUPPLY</h3>
+<p>Emotionally infinite.</p>
+</div>
+
+<div class="token-box">
+<h3>COMMUNITY</h3>
+<p>Traumatized but active.</p>
+</div>
+
+<div class="token-box">
+<h3>ROADMAP</h3>
+<p>Mostly panic.</p>
+</div>
+
+</div>
+
+<div class="panic-wrap">
+
+<button class="panic-btn" onclick="panicMode()">
+PANIC
+</button>
+
+</div>
+
+</div>
 
 </section>
 
 <footer>
-  NOT FINANCIAL ADVICE • NOT EMOTIONAL SUPPORT • © SAFU
+
+NOT FINANCIAL ADVICE • NOT EMOTIONAL SUPPORT • © SAFU
+
 </footer>
+
+<script>
+
+/* STATUS ROTATOR */
+
+const statusMessages = [
+
+"Community coping aggressively...",
+"Liquidity status uncertain...",
+"Someone bought the top again...",
+"Market conditions catastrophic...",
+"Chart unavailable due to trauma...",
+"Emotionally damaged holders detected..."
+
+];
+
+let currentStatus = 0;
+
+setInterval(() => {
+
+currentStatus =
+(currentStatus + 1) % statusMessages.length;
+
+document.getElementById("status").innerText =
+statusMessages[currentStatus];
+
+}, 2500);
+
+/* BUTTONS */
+
+function panicMode(){
+
+showPopup(
+"⚠ PANIC MODE ACTIVATED ⚠",
+"Selling would require liquidity."
+);
+
+}
+
+function inspectDamage(){
+
+showPopup(
+"PORTFOLIO STATUS",
+"So Absolutely F#Ked Up"
+);
+
+}
+
+function fakeWallet(){
+
+showPopup(
+"WALLET CONNECTION FAILED",
+"Even scammers rejected this token."
+);
+
+}
+
+/* CUSTOM POPUP */
+
+function showPopup(title,message){
+
+const popup = document.createElement("div");
+
+popup.innerHTML = `
+<div style="
+position:fixed;
+inset:0;
+background:#000000aa;
+display:flex;
+align-items:center;
+justify-content:center;
+z-index:9999;
+padding:20px;
+">
+
+<div style="
+background:#111;
+border:1px solid #ffffff10;
+border-radius:24px;
+padding:30px;
+max-width:340px;
+width:100%;
+text-align:center;
+">
+
+<h2 style="
+color:#ff0088;
+margin-bottom:16px;
+font-size:24px;
+">
+${title}
+</h2>
+
+<p style="
+color:#d0d0d0;
+line-height:1.7;
+margin-bottom:22px;
+">
+${message}
+</p>
+
+<button id="closePopup" style="
+background:#ff0088;
+border:none;
+padding:12px 20px;
+border-radius:14px;
+color:white;
+font-weight:800;
+cursor:pointer;
+">
+CLOSE
+</button>
+
+</div>
+</div>
+`;
+
+document.body.appendChild(popup);
+
+document
+.getElementById("closePopup")
+.onclick = () => popup.remove();
+
+}
+
+</script>
 
 </body>
 </html>
